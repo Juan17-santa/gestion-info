@@ -20,7 +20,7 @@ def main():
 
         elif opcion == "2":
             print("------ LISTA DE REGISTROS ------")
-            print(listar_registros())
+            listar_registros()
 
 
         elif opcion == "3":

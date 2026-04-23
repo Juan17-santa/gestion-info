@@ -1,27 +1,39 @@
-registros = []
-ids = set()
-correos = set()
+from validate import validar_id, validar_correo
+from file import load_data, save_data
 
 def crear_registro(id, nombre, correo):
-    from validate import validar_id, validar_correo
+    try:
+        registros = load_data()
 
-    if not validar_id(id, ids):
-        return "Error al crear: ID duplicado"
+        ids = {str(r["id"]) for r in registros}
+        correos = {r["correo"] for r in registros}
 
-    if not validar_correo(correo, correos):
-        return "Error al crear: correo duplicado"
+        if not validar_id(id, ids):
+            return "Error: ID duplicado"
 
-    registro = {
-        "id": id,
-        "nombre": nombre,
-        "correo": correo
-    }
+        if not validar_correo(correo, correos):
+            return "Error: correo ya existe"
 
-    registros.append(registro)
-    ids.add(id)
-    correos.add(correo)
+        nuevoRegistro = {
+            "id": id,
+            "nombre": nombre,
+            "correo": correo
+        }
 
-    return "Registro creado exitosamente\n"
+        registros.append(nuevoRegistro)
+        save_data(registros)
+
+        return "Registro creado exitosamente\n"
+
+    except ValueError as e:
+        print(f" {e}")
 
 def listar_registros():
-    return registros
+    registros = load_data()
+
+    if not registros:
+        print("No hay registros\n")
+        return
+
+    for r in registros:
+        print(r)
