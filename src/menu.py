@@ -1,4 +1,5 @@
 from service import new_register, list_records, search_record, update_record, delete_record
+from integration import exportar_csv
 from colorama import Fore, Back, init 
 
 init(autoreset=True)
@@ -12,7 +13,8 @@ def menu():
         print(Fore.YELLOW + "3. Buscar registros")
         print(Fore.MAGENTA + "4. Actualizar registros")
         print(Fore.CYAN + "5. Eliminar registros")
-        print("6. Salir")
+        print(Fore.CYAN + "6. Exportar registros a CSV")
+        print("7. Salir")
 
         opcion = input("Seleccione una opción: ")
 
@@ -51,6 +53,10 @@ def menu():
             print(delete_record(id))
 
         elif opcion == "6":
+            print(Back.CYAN + "\n------ EXPORTAR REGISTROS A CSV ------")
+            exportar_csv();
+
+        elif opcion == "7":
             print("Saliendo del sistema...")
             break
 
